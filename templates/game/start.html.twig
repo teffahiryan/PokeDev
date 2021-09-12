@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle partie - PokéDev{% endblock %}
+
+{% block body %}
+
+<div id="indexGameStart">
+    <h1 class="titleH1">Nouvelle partie - PokéDev</h1>
+    <h2> Choisissez votre premier Pokémon </h2>
+    
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Confirmer') }}</button>
+    {{ form_end(form) }}
+
+
+</div>
+
+{% endblock %}

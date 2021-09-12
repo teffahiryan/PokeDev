@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Jeu - PokéDev{% endblock %}
+
+{% block body %}
+
+<div id="indexMainBody">
+    <h1 class="titleH1"> Jeu - PokéDev</h1>
+
+    {% if app.user and equipeId is null %}
+        <div> <a href="{{ path('app_login', { 'id': app.user.id }) }}"> Nouvelle partie </a> </div>
+    {% elseif app.user %}
+        <div> <a href="{{ path('app_login') }}"> Jouer </a> </div>
+    {% else %}    
+        <div> <a href="{{ path('app_login') }}"> Se connecter pour jouer </a> </div>
+    {% endif %}
+    
+</div>
+
+{% endblock %}
