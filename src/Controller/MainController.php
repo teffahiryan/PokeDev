@@ -129,6 +129,10 @@ class MainController extends AbstractController
 
         // BOT TRAINER
 
+        $lengthPkmn = count($pokemonRepository->findAll());
+        $random_value_pkmn = random_int(1, $lengthPkmn);
+        $listPokemonBotId = $pokemonRepository->findOneBy(['id' => $random_value_pkmn]);
+
         $lengthBot = count($botRepository->findAll());
         $random_value_bot = random_int(1, $lengthBot);
         $bot = $botRepository->findOneBy(['id'=> $random_value_bot ]);
@@ -138,9 +142,10 @@ class MainController extends AbstractController
             'controller_name' => 'MainController',
             'random_bot' => $bot,
             'random_bot_username' => $botUsername,
+            'listTrainerBotPkmn' => $listPokemonBotId,
             'username' => $username,
-            'listNameTrainerPkmn' => $listPokemonId,
-            'listNameTrainerBotPkmn' => $listPokemonBotId,
+            'listTrainerPkmn' => $listPokemonId,
+
         ]);
 
     }

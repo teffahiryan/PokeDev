@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/attack')]
+#[Route('admin/attack')]
 class AttackController extends AbstractController
 {
     #[Route('/', name: 'attack_index', methods: ['GET'])]
     public function index(AttackRepository $attackRepository): Response
     {
-        return $this->render('attack/index.html.twig', [
+        return $this->render('admin/attack/index.html.twig', [
             'attacks' => $attackRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class AttackController extends AbstractController
             return $this->redirectToRoute('attack_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('attack/new.html.twig', [
+        return $this->renderForm('admin/attack/new.html.twig', [
             'attack' => $attack,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class AttackController extends AbstractController
     #[Route('/{id}', name: 'attack_show', methods: ['GET'])]
     public function show(Attack $attack): Response
     {
-        return $this->render('attack/show.html.twig', [
+        return $this->render('admin/attack/show.html.twig', [
             'attack' => $attack,
         ]);
     }
@@ -62,7 +62,7 @@ class AttackController extends AbstractController
             return $this->redirectToRoute('attack_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('attack/edit.html.twig', [
+        return $this->renderForm('admin/attack/edit.html.twig', [
             'attack' => $attack,
             'form' => $form,
         ]);

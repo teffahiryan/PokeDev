@@ -11,9 +11,12 @@
         <div>
             <p> Dresseur : {{ username }} </p>
             <p> Pokemon : 
-                {% for pkmn in listNameTrainerPkmn %}
-                <div> Vie = {{ pkmn.pokemonId.name }} </div>
-                   <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                {% for pkmn in listTrainerPkmn %}
+                <div> Nom = {{ pkmn.pokemonId.name }} </div>
+                <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                    {% for attq in pkmn.pokemonId.attack %}
+                        <button class="attqButton" onclick="enemieDamage({{ attq.damage }})"> {{ attq.name }} </button>
+                    {% endfor %}
                 {% endfor %}
             </p>
         </div>
@@ -21,17 +24,51 @@
         <div>
             <p> Dresseur Adverse : {{ random_bot_username }} </p>
             <p> Pokemon : 
-                {% for pkmn in listNameTrainerBotPkmn %}
-                <div> Vie = {{ pkmn.pokemonId.name }} </div>
-                   <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                <div> Nom = {{ listTrainerBotPkmn.name }} </div>
+                <div> Vie = <span id="hpEnemie"> {{ listTrainerBotPkmn.hp }} </span> </div>
+                {% for attq in listTrainerBotPkmn.attack %}
+                {# DONNER UN NOMBRE AUX CLASS ET FAIRE UN RANDOM DANS UNE FONCTION JS #}
+                    <button class="attqButtonBot"> {{ attq.name }} </button>
+                    <p> {{ attq.damage }} </p>
                 {% endfor %}
             </p>
         </div>
     </div>
-
-
-    
     
 </div>
+
+<script>
+
+    function enemieDamage(dmg) {
+        var actualHpEnemie = document.getElementById("hpEnemie").textContent;
+        var spanHpEnemie = document.getElementById("hpEnemie");
+        var afterHpEnemie = actualHpEnemie - dmg;
+
+        if(afterHpEnemie <= 0){
+            spanHpEnemie.innerHTML = actualHpEnemie - dmg;
+            console.log("C WIN");
+            // DISPLAY BLOCK LA MODAL DE WIN AVEC UN Z-INDEX SUPERIEUR
+        }else{
+            setInterval(function() {
+                down(actualHpEnemie, dmg);
+            }, 3000);
+
+            // DISPLAY NONE DES ATTAQUES DU DRESSER - FAIRE ATTAQUER L'ENNEMIE
+
+            var buttonAttk = document.getElementsByClassName("attqButton");
+            for(var i=0;i<buttonAttk.length;i++)
+            {
+                buttonAttk[i].style.display='none';
+            }
+            
+        }
+    }
+
+    function down(id1, id2) {
+        var spanHpEnemie = document.getElementById("hpEnemie");
+        spanHpEnemie.innerHTML = id1 - id2;
+    }
+
+</script>
 
 {% endblock %}
