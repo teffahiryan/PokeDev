@@ -30,13 +30,13 @@ class Equipe
     private $botTrainer;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Pokemon::class)
+     * @ORM\OneToMany(targetEntity=CatchPokemon::class, mappedBy="equipeId")
      */
-    private $pokemonId;
+    private $catchPokemon;
 
     public function __construct()
     {
-        $this->pokemonId = new ArrayCollection();
+        $this->catchPokemon = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,25 +84,31 @@ class Equipe
     }
 
     /**
-     * @return Collection|Pokemon[]
+     * @return Collection|CatchPokemon[]
      */
-    public function getPokemonId(): Collection
+    public function getCatchPokemon(): Collection
     {
-        return $this->pokemonId;
+        return $this->catchPokemon;
     }
 
-    public function addPokemonId(Pokemon $pokemonId): self
+    public function addCatchPokemon(CatchPokemon $catchPokemon): self
     {
-        if (!$this->pokemonId->contains($pokemonId)) {
-            $this->pokemonId[] = $pokemonId;
+        if (!$this->catchPokemon->contains($catchPokemon)) {
+            $this->catchPokemon[] = $catchPokemon;
+            $catchPokemon->setEquipeId($this);
         }
 
         return $this;
     }
 
-    public function removePokemonId(Pokemon $pokemonId): self
+    public function removeCatchPokemon(CatchPokemon $catchPokemon): self
     {
-        $this->pokemonId->removeElement($pokemonId);
+        if ($this->catchPokemon->removeElement($catchPokemon)) {
+            // set the owning side to null (unless already changed)
+            if ($catchPokemon->getEquipeId() === $this) {
+                $catchPokemon->setEquipeId(null);
+            }
+        }
 
         return $this;
     }

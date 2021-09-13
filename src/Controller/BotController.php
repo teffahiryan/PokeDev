@@ -4,19 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Bot;
 use App\Form\BotType;
+use App\Entity\Equipe;
 use App\Repository\BotRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/bot')]
+#[Route('admin/bot')]
 class BotController extends AbstractController
 {
     #[Route('/', name: 'bot_index', methods: ['GET'])]
     public function index(BotRepository $botRepository): Response
     {
-        return $this->render('bot/index.html.twig', [
+        return $this->render('admin/bot/index.html.twig', [
             'bots' => $botRepository->findAll(),
         ]);
     }
@@ -29,6 +30,13 @@ class BotController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $equipe = new Equipe();
+            $equipe->setBotTrainer($bot);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($equipe);
+            $entityManager->flush();
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($bot);
             $entityManager->flush();
@@ -36,7 +44,7 @@ class BotController extends AbstractController
             return $this->redirectToRoute('bot_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('bot/new.html.twig', [
+        return $this->renderForm('admin/bot/new.html.twig', [
             'bot' => $bot,
             'form' => $form,
         ]);
@@ -45,7 +53,7 @@ class BotController extends AbstractController
     #[Route('/{id}', name: 'bot_show', methods: ['GET'])]
     public function show(Bot $bot): Response
     {
-        return $this->render('bot/show.html.twig', [
+        return $this->render('admin/bot/show.html.twig', [
             'bot' => $bot,
         ]);
     }
@@ -62,7 +70,7 @@ class BotController extends AbstractController
             return $this->redirectToRoute('bot_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('bot/edit.html.twig', [
+        return $this->renderForm('admin/bot/edit.html.twig', [
             'bot' => $bot,
             'form' => $form,
         ]);

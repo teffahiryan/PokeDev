@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Entity\Equipe;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -47,6 +49,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $pseudo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CatchPokemon::class, mappedBy="userId", orphanRemoval=true)
+     */
+    private $catchPokemon;
+
+    public function __construct()
+    {
+        $this->catchPokemon = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -157,6 +169,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CatchPokemon[]
+     */
+    public function getCatchPokemon(): Collection
+    {
+        return $this->catchPokemon;
+    }
+
+    public function addCatchPokemon(CatchPokemon $catchPokemon): self
+    {
+        if (!$this->catchPokemon->contains($catchPokemon)) {
+            $this->catchPokemon[] = $catchPokemon;
+            $catchPokemon->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCatchPokemon(CatchPokemon $catchPokemon): self
+    {
+        if ($this->catchPokemon->removeElement($catchPokemon)) {
+            // set the owning side to null (unless already changed)
+            if ($catchPokemon->getUserId() === $this) {
+                $catchPokemon->setUserId(null);
+            }
+        }
 
         return $this;
     }

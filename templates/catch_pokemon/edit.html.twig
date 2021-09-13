@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CatchPokemon{% endblock %}
+
+{% block body %}
+    <h1>Edit CatchPokemon</h1>
+
+    {{ include('catch_pokemon/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('catch_pokemon_index') }}">back to list</a>
+
+    {{ include('catch_pokemon/_delete_form.html.twig') }}
+{% endblock %}

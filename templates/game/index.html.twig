@@ -7,13 +7,25 @@
 <div id="indexMainBody">
     <h1 class="titleH1"> Jeu - PokéDev</h1>
 
-    {% if app.user and equipeId is null %}
-        <div> <a href="{{ path('app_login', { 'id': app.user.id }) }}"> Nouvelle partie </a> </div>
-    {% elseif app.user %}
-        <div> <a href="{{ path('app_login') }}"> Jouer </a> </div>
-    {% else %}    
-        <div> <a href="{{ path('app_login') }}"> Se connecter pour jouer </a> </div>
-    {% endif %}
+    <div>
+        <div> 
+            <h2> Votre équipe </h2> 
+            <ul>
+                {% for pokemon in catch_pokemon %}
+                    <li> {{ pokemon }} </li>
+                {% endfor %}
+            </ul>
+            <div> <a href="#"> Changer l'équipe </a> </div>
+        </div>
+        <div>
+            <div>
+                <a href="{{ path('app_game_cbt_trainer') }}"> Combat Dresseur </a>
+            </div>
+            <div>
+                <a href="#"> Combat Sauvage </a>
+            </div>
+        </div>
+    </div>
     
 </div>
 

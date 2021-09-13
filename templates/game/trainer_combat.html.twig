@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Combat Dresseur - PokéDev{% endblock %}
+
+{% block body %}
+
+<div id="indexMainBody">
+    <h1 class="titleH1"> Combat de dresseur - PokéDev</h1>
+
+    <div>
+        <div>
+            <p> Dresseur : {{ username }} </p>
+            <p> Pokemon : 
+                {% for pkmn in listNameTrainerPkmn %}
+                <div> Vie = {{ pkmn.pokemonId.name }} </div>
+                   <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                {% endfor %}
+            </p>
+        </div>
+        <hr>
+        <div>
+            <p> Dresseur Adverse : {{ random_bot_username }} </p>
+            <p> Pokemon : 
+                {% for pkmn in listNameTrainerBotPkmn %}
+                <div> Vie = {{ pkmn.pokemonId.name }} </div>
+                   <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+
+    
+    
+</div>
+
+{% endblock %}

@@ -10,13 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/equipe')]
+#[Route('admin/equipe')]
 class EquipeController extends AbstractController
 {
     #[Route('/', name: 'equipe_index', methods: ['GET'])]
     public function index(EquipeRepository $equipeRepository): Response
     {
-        return $this->render('equipe/index.html.twig', [
+        return $this->render('admin/equipe/index.html.twig', [
             'equipes' => $equipeRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class EquipeController extends AbstractController
             return $this->redirectToRoute('equipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('equipe/new.html.twig', [
+        return $this->renderForm('admin/equipe/new.html.twig', [
             'equipe' => $equipe,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class EquipeController extends AbstractController
     #[Route('/{id}', name: 'equipe_show', methods: ['GET'])]
     public function show(Equipe $equipe): Response
     {
-        return $this->render('equipe/show.html.twig', [
+        return $this->render('admin/equipe/show.html.twig', [
             'equipe' => $equipe,
         ]);
     }
@@ -62,7 +62,7 @@ class EquipeController extends AbstractController
             return $this->redirectToRoute('equipe_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('equipe/edit.html.twig', [
+        return $this->renderForm('admin/equipe/edit.html.twig', [
             'equipe' => $equipe,
             'form' => $form,
         ]);

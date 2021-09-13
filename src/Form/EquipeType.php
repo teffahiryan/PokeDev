@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Attack;
 use App\Entity\Equipe;
 use App\Entity\Pokemon;
+use App\Entity\CatchPokemon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -25,11 +26,11 @@ class EquipeType extends AbstractType
                 'class' => Bot::class,
                 'choice_label' => 'name',
             ])
-            ->add('pokemonId', EntityType::class, [
-                'class' => Pokemon::class,
+            ->add('catchPokemon', EntityType::class, [
+                'class' => CatchPokemon::class,
                 'label' => 'Pokemon',
                 'multiple' => 'true',
-                'choice_label' => 'name',
+                'choice_label' => 'id',
                 'expanded' => true
             ])
         ;
