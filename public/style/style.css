@@ -44,3 +44,90 @@ body{
 /**** NEW GAME START *****/
 /*************************/
 
+
+
+/**************************/
+/**** GAME **************/
+/*************************/
+
+#indexGameBody>h1{
+    margin-top: 25px;
+}
+
+#indexGameBody>div{
+    margin-top: 50px;
+    width: 80%;
+    margin:auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+#indexGameBody>div>div{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* FIRST BOX */
+
+#indexGameBody>div>div:first-child{
+    background-color: #6764a5;
+    border: solid 5px #2b22a1;
+    color: white;
+    border-radius: 5px;
+}
+
+#indexGameBody>div>div:first-child>h2{
+    width: 100%;
+    background-color: #2b22a1;
+    text-align: center;
+    margin: 0;
+    padding: 15px 0px 15px 0px;
+}
+
+#indexGameBody>div>div:first-child>ul{
+    margin: 15px;
+    list-style: none;
+    padding: unset;
+}
+
+#indexGameBody>div>div:first-child>div:last-child{
+    padding: 15px;
+    width: 80%;
+}
+
+/* SECOND BOX */
+
+#indexGameBody>div>div:last-child{
+    background-color: #6764a5;
+    border: solid 5px #2b22a1;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+#indexGameBody>div>div:last-child>div{
+    margin: 10px 0px 10px 0px;
+}
+
+/* href */
+
+#indexGameBody a{
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: white;
+    background-color: #4233ff;
+    border: solid 5px #2b22a1;
+    border-radius: 5px;
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+}
