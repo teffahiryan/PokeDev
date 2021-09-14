@@ -13,7 +13,7 @@
             <p> Pokemon : 
                 {% for pkmn in listTrainerPkmn %}
                 <div> Nom = {{ pkmn.pokemonId.name }} </div>
-                <div> Vie = {{ pkmn.pokemonId.hp }} </div>
+                <div> Vie = <span id="hpTrainer"> {{ pkmn.pokemonId.hp }} </span> </div>
                     {% for attq in pkmn.pokemonId.attack %}
                         <button class="attqButton" onclick="enemieDamage({{ attq.damage }})"> {{ attq.name }} </button>
                     {% endfor %}
@@ -26,10 +26,15 @@
             <p> Pokemon : 
                 <div> Nom = {{ listTrainerBotPkmn.name }} </div>
                 <div> Vie = <span id="hpEnemie"> {{ listTrainerBotPkmn.hp }} </span> </div>
+                {% set count = 0 %}
                 {% for attq in listTrainerBotPkmn.attack %}
+                    {% set count = count + 1 %}
                 {# DONNER UN NOMBRE AUX CLASS ET FAIRE UN RANDOM DANS UNE FONCTION JS #}
-                    <button class="attqButtonBot"> {{ attq.name }} </button>
+                    <button id="attqButtonBot{{count}}"> {{ attq.name }} </button>
                     <p> {{ attq.damage }} </p>
+                        {% if loop.first %}
+                            <div id="attqEnemieLength"> {{ count }} </div>
+                        {% endif %}
                 {% endfor %}
             </p>
         </div>
@@ -40,33 +45,58 @@
 <script>
 
     function enemieDamage(dmg) {
+        
         var actualHpEnemie = document.getElementById("hpEnemie").textContent;
+        var actualHpTrainer = document.getElementById("hpTrainer").textContent;
         var spanHpEnemie = document.getElementById("hpEnemie");
         var afterHpEnemie = actualHpEnemie - dmg;
 
-        if(afterHpEnemie <= 0){
-            spanHpEnemie.innerHTML = actualHpEnemie - dmg;
-            console.log("C WIN");
-            // DISPLAY BLOCK LA MODAL DE WIN AVEC UN Z-INDEX SUPERIEUR
-        }else{
-            setInterval(function() {
-                down(actualHpEnemie, dmg);
-            }, 3000);
+        // ENEMIE ATTACK
 
-            // DISPLAY NONE DES ATTAQUES DU DRESSER - FAIRE ATTAQUER L'ENNEMIE
+        var enemieAttackLenght = document.getElementById("attaqEnemieLength").textContent;
+        var randomEnemieAttack = Math.random() * (enemieAttackLenght - 1) + 1;
+        console.log(randomEnemieAttack);
+        var enemieRandomAttack = document.getElementById( "attqButtonBot"  );
+        var enemieRandomAttackDamge ="";
 
-            var buttonAttk = document.getElementsByClassName("attqButton");
-            for(var i=0;i<buttonAttk.length;i++)
-            {
-                buttonAttk[i].style.display='none';
-            }
-            
+        // DISPLAY NONE DES ATTAQUES DU DRESSER - FAIRE ATTAQUER L'ENNEMIE
+
+        var buttonAttk = document.getElementsByClassName("attqButton");
+        for(var i=0;i<buttonAttk.length;i++)
+        {
+            buttonAttk[i].style.display='none';
         }
+
+        // DISPLAY BLOCK LA MODAL DE WIN AVEC UN Z-INDEX SUPERIEUR
+        setInterval(function() {
+
+            downBot(actualHpEnemie, dmg);
+
+            if(spanHpEnemie.textContent > 0){
+
+                setInterval(function() {
+                    downTrainer(actualHpTrainer, );
+                    for(var i=0;i<buttonAttk.length;i++)
+                    {
+                        buttonAttk[i].style.display='none';
+                    }
+                }, 3000);
+
+            }else{
+                console.log("win");
+            }
+
+        }, 3000);
     }
 
-    function down(id1, id2) {
+    function downBot(id1, id2) {
         var spanHpEnemie = document.getElementById("hpEnemie");
         spanHpEnemie.innerHTML = id1 - id2;
+    }
+
+    function downTrainer(id1, id2) {
+        var spanHpTrainer = document.getElementById("hpTrainer");
+        spanHpTrainer.innerHTML = id1 - id2;
     }
 
 </script>
