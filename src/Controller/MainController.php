@@ -149,4 +149,21 @@ class MainController extends AbstractController
         ]);
 
     }
+
+    #[Route('/game/combat/savage', name: 'app_game_cbt_savage')]
+    public function savageCombat(UserRepository $userRepository): Response
+    {
+
+        if($user = $this->getUser() ){
+            $userEquipe = $user->getUserIdentifier();
+            $userRepository = $userRepository->findOneBy(['email' => $userEquipe]);
+            $userRepository = $userRepository->getEquipeId();
+        }
+
+        return $this->render('game/savage_combat.html.twig', [
+            'controller_name' => 'MainController',
+            'equipeId' => $userRepository,
+        ]);
+
+    }
 }
